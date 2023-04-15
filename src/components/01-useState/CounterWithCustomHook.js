@@ -34,7 +34,7 @@ export const CounterWithCustomHook = () => {
                 onClick={
                     () => decrement( 2 )
                 }
-            > - 1 </button>
+            > - 2 </button>
         </>
     )
 }
