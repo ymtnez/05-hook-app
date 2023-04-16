@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Message } from './Message';
+
 import './effects.css';
 
 export const SimpleForm = () => {
@@ -17,17 +19,17 @@ export const SimpleForm = () => {
      * cada cosa que cambie, ejemplo: los estados, el formulario, etc.
      */
     useEffect(() => {
-        console.log('Primer cambio');    
+        // console.log('Primer cambio');    
     }, []);
 
     //Este efecto se disparara cuando cambie el formulario
     useEffect(() => {
-        console.log('Cambio el form');    
+        // console.log('Cambio el form');    
     }, [ formState ]);
 
     //Este efecto se disparara cuando cambie el correo en el formulario
     useEffect(() => {
-        console.log('Cambio el correo');    
+        // console.log('Cambio el correo');    
     }, [ correo ]);
 
     const handleInputChange = ({ target }) => {
@@ -75,7 +77,9 @@ export const SimpleForm = () => {
                     value={ correo }
                     onChange={ handleInputChange }
                 />
-            </div>  
+            </div> 
+
+            { ( nombre === '123' ) && <Message /> }
         </>
     );
 };
