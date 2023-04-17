@@ -35,7 +35,7 @@ export const Message = () => {
                 Coordenadas del mouse: x: { x } y: { y }
                 
             </p>
-                   
+                { ( x === y ) && 'Forme un cuadrado' }   
         </div>
     );
 };
