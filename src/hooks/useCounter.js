@@ -2,15 +2,15 @@ import { useState } from 'react';
 
 export const useCounter = ( initialState = 10 ) => {
     
-    const [state, setState] = useState(initialState) //10
+    const [counter, setCounter] = useState(initialState) //10
     
-    const increment = () => setState( state + 1 );
+    const increment = () => setCounter( counter + 1 );
     //Pudiera haber pasado factor con valor por defecto (factor = 2)
-    const reset = () => setState( initialState );
-    const decrement = ( factor ) => setState( state - factor );
+    const reset = () => setCounter( initialState );
+    const decrement = ( factor ) => setCounter( counter - factor );
 
     return {
-        state,
+        counter,
         increment,
         decrement,
         reset

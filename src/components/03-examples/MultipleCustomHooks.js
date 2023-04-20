@@ -1,11 +1,14 @@
 import React from 'react'
 import { useFetch } from '../../hooks/useFetch'
+import { useCounter } from '../../hooks/useCounter'
 
 import './multCustHook.css'
 
 export const MultipleCustomHooks = () => {
 
-    const urlApi   = `https://api.breakingbadquotes.xyz/v1/quotes/`;
+    const { counter, increment, decrement } = useCounter( 1 );
+
+    const urlApi   = `https://api.breakingbadquotes.xyz/v1/quotes/${counter}`;
     const {arrObj, error, loading} = useFetch( urlApi );
 
     /**
@@ -18,14 +21,23 @@ export const MultipleCustomHooks = () => {
      * Cuando se ejecute la promesa si arrObj trae el arreglo, entonces
      * !!arrObj daria true (!arrObj da false y !!arrObj daria true).
      */
-    const { quote, author } = !!arrObj && arrObj[0];
+    //const { quote, author } = !!arrObj && arrObj[0];
 
     return (
         <div>
             <h1>BreakingBad Quotes</h1>
             <hr />
 
-            {  
+            {
+                ( !loading ) && 
+                    (
+                        <div className='alert alert-success text-center'>
+                            Completado...
+                        </div>
+                    )
+            }
+           
+            {
                 ( loading )
                 ?
                     (
@@ -35,20 +47,40 @@ export const MultipleCustomHooks = () => {
                     )
                 :
                     (
-                        <>                        
-                            <div className='alert alert-success text-center'>
-                                Completado...    
-                            </div>
-                            <blockquote className='blockquote float-end'>
-                                <p> { quote } </p>
-                                <footer className='blockquote-footer'>
-                                    Frase de:
-                                    <cite title={ author }> { author } </cite>
-                                </footer>
-                            </blockquote>
-                        </>
+
+                        arrObj.map( (objeto, index) =>{
+
+                            const { quote, author } = objeto;
+
+                            return ( 
+
+                                <blockquote key={ index } className='blockquote float-end'>
+                                    <p key={ 'p'+index } className='mb-3'> { quote } </p>
+                                    <footer key={ 'foot'+index } className='blockquote-footer'>
+                                        Frase de:
+                                        <cite title={ author }> { author } </cite>
+                                    </footer>
+                                </blockquote> 
+
+                            )
+
+                        })
+                        
                     )
             }
+            
+            <button 
+                className='btn btn-primary'
+                onClick={ increment }
+            >
+                Mas quotes
+            </button>
+            <button disabled={ (counter <=1) }
+                className='btn btn-primary'
+                onClick={ () => decrement(1) }
+            >
+                Menos quotes
+            </button>            
 
         </div>
     )

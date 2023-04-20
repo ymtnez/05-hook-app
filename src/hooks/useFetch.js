@@ -12,6 +12,14 @@ export const useFetch = ( url ) => {
 
     useEffect( () => {
 
+        setObjValues(
+            {
+                arrObj: null,
+                loading: true,
+                error: null    
+            }
+        )
+
         fetch( url )
             .then( resp => resp.json() )
             .then( data => {
@@ -29,7 +37,7 @@ export const useFetch = ( url ) => {
                 }, 1500);
             })        
 
-    }, [url])
+    }, [url]);
 
     return objValues;
 
