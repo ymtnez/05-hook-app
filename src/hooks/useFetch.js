@@ -1,6 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export const useFetch = ( url ) => {
+
+    /**
+     * Este hook se utiliza para referenciar un valor que no es necesario
+     * para el renderizado. Se deberia definir en el top de mi componente
+     */
+    const isMounted = useRef( true );
 
     const [objValues, setObjValues] = useState(
         {
@@ -10,8 +16,16 @@ export const useFetch = ( url ) => {
         }
     );
 
-    useEffect( () => {
+    useEffect(() => {      
+    
+        return () => {
+            isMounted.current = false;
+        }
+    }, [])
+    
 
+    useEffect( () => {
+        //Volvemos a resetear los valores para simular una carga nueva
         setObjValues(
             {
                 arrObj: null,
@@ -25,16 +39,19 @@ export const useFetch = ( url ) => {
             .then( data => {
 
                 setTimeout(() => {
+
+                    if ( isMounted.current ) {
+
+                        setObjValues(
+                            {
+                                arrObj: data, //Devuelve un arreglo de un objeto
+                                loading: false,
+                                error: null
+                            }
+                        )
+                    }    
     
-                    setObjValues(
-                        {
-                            arrObj: data, //Devuelve un arreglo de un objeto
-                            loading: false,
-                            error: null
-                        }
-                    )
-    
-                }, 1500);
+                }, 1000);
             })        
 
     }, [url]);

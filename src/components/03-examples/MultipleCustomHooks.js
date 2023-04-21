@@ -80,8 +80,7 @@ export const MultipleCustomHooks = () => {
                 onClick={ () => decrement(1) }
             >
                 Menos quotes
-            </button>            
-
+            </button>         
         </div>
     )
 }
